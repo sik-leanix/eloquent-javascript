@@ -1,8 +1,17 @@
 specialForms.set = (args, scope) => {
-    const firstArg = args[0];
-     if (firstArg.type != "word") {
-     throw ReferenceError("This is bad!")
+  const firstArg = args[0].name;
+   const secondArg = args[1].name;
+   let oldValue = evaluate(args[0], scope);
+   let newValue = evaluate(args[1], scope);
+   const scopePrototye = Object.getPrototypeOf(scope);
+   if (Object.prototype.hasOwnProperty.call(scopePrototye, firstArg)) {
+       scopePrototye[firstArg] = newValue;
+   } else {  
+     throw ReferenceError("Undefined");
    }
+   
+   const bla = Object.prototype.hasOwnProperty.call(scope, secondArg);
+   return newValue;
 };
 
 run(`
