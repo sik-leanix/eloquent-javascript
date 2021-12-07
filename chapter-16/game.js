@@ -298,7 +298,7 @@ Player.prototype.update = function(time, state, keys) {
   return new Player(pos, new Vec(xSpeed, ySpeed));
 };
 
-function trackKeys(keys) {
+export function trackKeys(keys) {
   let down = Object.create(null);
   function track(event) {
     if (keys.includes(event.key)) {

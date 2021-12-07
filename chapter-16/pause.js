@@ -1,49 +1,49 @@
 import { GAME_LEVELS } from "./levels.js";
-import { DOMDisplay, runAnimation, runGame, State, arrowKeys } from "./game.js";
+import { DOMDisplay, runAnimation, runGame, State, trackKeys } from "./game.js";
 
 function runLevelWithPauseSupport(level, Display) {
   let display = new Display(document.body, level);
   let state = State.start(level);
   let ending = 1;
-  let pause = "running";
-      return new Promise(resolve => {
-    runAnimation(time => {
+  return new Promise(resolve => {
+    let gamePaused = false;
+    const isGamePaused = () => gamePaused;
+    const waitForResume = () => {
+      if (isGamePaused()) {
+        setTimeout(waitForResume, 100);
+      } else {
+        runAnimation(animate);
+      }
+    }
+    const pauseOrResumeGame = (event) => {
+      if (event.key === "Escape") {
+        gamePaused = !gamePaused;
+      } 
+    }
+
+    const animate = (time => {
       state = state.update(time, arrowKeys);
       display.syncState(state);
-      function pauseFun (event) {
-        if (event.key === "Escape") {
-          if (pause === "running") {
-            //console.log('The game is running!')
-            return pause = "paused"
-          } else {
-            //console.log("The game is paused!");
-            return pause = "afterPause"
-          }
-        } 
-      }
-      window.addEventListener("keydown", pauseFun);
       
-      console.log(pause)
-      if (pause === "paused") {
-        return false
-      } else if (pause === "afterPause") {
-        runAnimation(frame);
-        pause = "running"
-        return true
-      }
-      
-
-      if (state.status == "playing") {
+      if (isGamePaused()) {
+        waitForResume();
+        return false; // Returning false will stop the animation
+      } else if (state.status == "playing") {
         return true;
       } else if (ending > 0) {
         ending -= time;
         return true;
       } else {
         display.clear();
+        window.removeEventListener("keydown", pauseOrResumeGame);
         resolve(state.status);
         return false;
       }
     });
+
+    document.addEventListener("keydown", pauseOrResumeGame);
+    let arrowKeys = trackKeys(["ArrowLeft", "ArrowRight", "ArrowUp"])
+    runAnimation(animate);
   });
 }
 
