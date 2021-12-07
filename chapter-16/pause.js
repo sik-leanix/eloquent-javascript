@@ -1,4 +1,7 @@
-function runLevel(level, Display) {
+import { GAME_LEVELS } from "./levels.js";
+import { DOMDisplay, runAnimation, runGame, State, arrowKeys } from "./game.js";
+
+function runLevelWithPauseSupport(level, Display) {
   let display = new Display(document.body, level);
   let state = State.start(level);
   let ending = 1;
@@ -43,3 +46,5 @@ function runLevel(level, Display) {
     });
   });
 }
+
+runGame(GAME_LEVELS, DOMDisplay, runLevelWithPauseSupport);
