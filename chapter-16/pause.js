@@ -6,8 +6,7 @@ function runLevelWithPauseSupport(level, Display) {
   let state = State.start(level);
   let ending = 1;
   return new Promise(resolve => {
-    let gamePaused = false;
-    const isGamePaused = () => gamePaused;
+    const isGamePaused = () => state.status === "paused";
     const waitForResume = () => {
       if (isGamePaused()) {
         setTimeout(waitForResume, 100);
@@ -17,7 +16,11 @@ function runLevelWithPauseSupport(level, Display) {
     }
     const pauseOrResumeGame = (event) => {
       if (event.key === "Escape") {
-        gamePaused = !gamePaused;
+        if (state.status === "paused") {
+          state.status === "playing";
+        } else {
+          state.status = "paused";
+        }
       } 
     }
 

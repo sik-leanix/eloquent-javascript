@@ -22,3 +22,13 @@ background: rgb(160, 64, 64);
 .won .player {
 box-shadow: -4px -7px 8px white, 4px -7px 8px white;
 }
+
+.game.paused::before {
+    position: fixed;
+    width: 600px;
+    text-align: center;
+    margin-top: 50px;
+    content: "Paused";
+    color: white;
+    font-size: 24px;
+}
