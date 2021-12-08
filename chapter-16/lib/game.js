@@ -9,7 +9,7 @@ var simpleLevelPlan = `
 ......##############..
 ......................`;
 
-var Level = class Level {
+export var Level = class Level {
   constructor(plan) {
     let rows = plan.trim().split("\n").map(l => [...l]);
     this.height = rows.length;
@@ -44,7 +44,7 @@ export var State = class State {
   }
 }
 
-var Vec = class Vec {
+export var Vec = class Vec {
   constructor(x, y) {
     this.x = x; this.y = y;
   }
@@ -112,7 +112,7 @@ var Coin = class Coin {
 
 Coin.prototype.size = new Vec(0.6, 0.6);
 
-var levelChars = {
+export var levelChars = {
   ".": "empty", "#": "wall", "+": "lava",
   "@": Player, "o": Coin,
   "=": Lava, "|": Lava, "v": Lava
@@ -327,7 +327,7 @@ export function runAnimation(frameFunc) {
   requestAnimationFrame(frame);
 }
 
-function runLevel(level, Display) {
+export function runLevel(level, Display) {
   let display = new Display(document.body, level);
   let state = State.start(level);
   let ending = 1;
