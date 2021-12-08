@@ -17,7 +17,7 @@ function runLevelWithPauseSupport(level, Display) {
     const pauseOrResumeGame = (event) => {
       if (event.key === "Escape") {
         if (state.status === "paused") {
-          state.status === "playing";
+          state.status = "playing";
         } else {
           state.status = "paused";
         }
