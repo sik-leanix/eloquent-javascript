@@ -1,5 +1,5 @@
-import { GAME_LEVELS } from "../levels.js";
-import { DOMDisplay, runAnimation, runGame, State, trackKeys } from "../game.js";
+import { GAME_LEVELS } from "../lib/levels.js";
+import { DOMDisplay, runAnimation, runGame, State, trackKeys } from "../lib/game.js";
 
 function runLevelWithPauseSupport(level, Display) {
   let display = new Display(document.body, level);
