@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="../lib/game.css">
+</head>
+<body>
+    <script src="./a-monster.js" type="module"></script>
+    <div>
+        <h2>Exercise: A monster</h2>
+        <p> It is traditional for platform games to have enemies that you can jump on top of to defeat. This exercise asks you to add such an actor type to the game.</p>
+        <p>
+            We’ll call it a monster. Monsters move only horizontally. 
+            You can make them move in the direction of the player, bounce back and forth like horizontal lava, or have any movement pattern you want. 
+            The class doesn’t have to handle falling, but it should make sure the monster doesn’t walk through walls.
+        </p>
+        <p>
+            When a monster touches the player, the effect depends on whether the player is jumping on top of them or not. 
+            You can approximate this by checking whether the player’s bottom is near the monster’s top. If this is the case, the monster disappears. 
+            If not, the game is lost.
+        </p>
+        <h3>Hints:</h3>
+        <p>If you want to implement a type of motion that is stateful, such as bouncing, make sure you store the necessary state in the actor object—include it as constructor argument and add it as a property.</p>
+        <p>Remember that update returns a new object, rather than changing the old one.</p>
+        <p>
+            When handling collision, find the player in state.actors and compare its position to the monster’s position. To get the bottom of the player, you have to add its vertical size to its vertical position. 
+            The creation of an updated state will resemble either Coin’s collide method (removing the actor) or Lava’s (changing the status to "lost"), depending on the player position.
+        </p>
+    </div>
+    <p>
+    <a href="https://github.com/sik-leanix/eloquent-javascript/blob/main/chapter-16/a-monster/a-monster.js">Here you can see my code</a>
+    </p>
+</body>
+</html>

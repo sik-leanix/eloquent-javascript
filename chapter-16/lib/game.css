@@ -32,3 +32,9 @@ box-shadow: -4px -7px 8px white, 4px -7px 8px white;
     color: white;
     font-size: 24px;
 }
+
+.monster { 
+    background: purple;
+    background-image: url("../a-monster/monster.png");
+    background-repeat: no-repeat; 
+}
