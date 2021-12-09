@@ -1,4 +1,4 @@
-import { DOMDisplay, Vec, levelChars, runLevel, Level } from "../lib/game.js";
+import { DOMDisplay, Vec, levelChars, runLevel, Level, State } from "../lib/game.js";
 
 class Monster {
     constructor(pos) {
@@ -31,18 +31,18 @@ class Monster {
 
     collide(state) {
       const player = state.player;
-      const playerPosX = player.pos.x;
-      const playerPosY = player.pos.y;
-      let status = state.status;
-      let filtered = state.actors.filter(a => a != this);
-      if (playerPosX === this.pos.x && playerPosY === this.pos.x) {
+      const playerPosY = Math.floor(player.pos.y);
+      if (Math.floor(this.pos.y) - playerPosY === 2) {
+        let status = state.status;
+        let filtered = state.actors.filter(a => a != this);
         if (!filtered.some(a => a.type == "coin")) status = "won";
-            return new State(state.level, filtered, status);
-      } else if (playerPosX === this.pos.x && playerPosY != this.pos.x) {
-          console.log("Jaaa")
+        return new State(state.level, filtered, status);
+        
+      } else {
+        return new State(state.level, state.actors, "lost");
+        }
       }
-    }
-  }
+  } 
 
   Monster.prototype.size = new Vec(1.2, 2);
 
@@ -62,18 +62,3 @@ class Monster {
 ..........################........
 ..................................
 `), DOMDisplay);
-
-  runLevel(new Level(`
-..................................
-.################################.
-.#..............................#.
-.#..............................#.
-.#..............................#.
-.#...........................o..#.
-.#..@...........................#.
-.##########..............########.
-..........#..o..o..o..o..#........
-..........#...........M..#........
-..........################........
-..................................
-`), DOMDisplay); 
