@@ -1,0 +1,45 @@
+<canvas width="600" height="200"></canvas>
+<script>
+  let cx = document.querySelector("canvas").getContext("2d");
+  
+  //trapezoid
+  cx.beginPath();
+  cx.moveTo(50, 30);
+  cx.lineTo(30, 70);
+  cx.lineTo(110, 70);
+  cx.lineTo(90, 30);
+  cx.closePath();
+  cx.stroke();
+
+  //red diamond 
+  cx.translate(170, 60);
+  cx.rotate(Math.PI / 4);
+  cx.fillStyle = "red";
+  cx.fillRect(-30, -30, 60, 60);
+
+  //zigzagging
+  cx.beginPath();
+  const startX = 240;
+  const startY = 30;
+  let currentX;
+  let currentY;
+  let counter = 0;
+  let edges = 5;
+  let cornes = edges * 2;
+  for (;counter < cornes; counter++) {
+  	if (counter === 0) {
+    	cx.moveTo(startX, startY);
+      	currentX = startX;
+      	currentY = startY;
+    } else if (counter % 2 == 0) {
+      	currentX - 100;
+     	currentY - 5;
+    	cx.lineTo(currentX, currentY);
+    } else {
+    	currentX + 100;
+     	currentY - 5;
+    	cx.lineTo(currentX, currentY);
+    }
+  }
+  cx.stroke();
+</script>
