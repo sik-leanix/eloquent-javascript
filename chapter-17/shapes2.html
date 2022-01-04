@@ -27,23 +27,23 @@
   let corners = 6;
   let path = corners * 2;
   for (let counter = 0; counter <= path; counter++) {
-    currentY = currentY + 7;
-    if (counter === 0) {
-        cx.moveTo(startX, startY);
-    currentX = startX;
-    currentY = startY;
-    } else if (counter % 2 == 0) {
-    currentX = currentX - 90;
-    } else {
-        currentX = currentX + 90;
-    }
+        currentY = currentY + 7;
+        if (counter === 0) {
+            cx.moveTo(startX, startY);
+            currentX = startX;
+            currentY = startY;
+        } else if (counter % 2 == 0) {
+            currentX = currentX - 90;
+        } else {
+            currentX = currentX + 90;
+        }
 
-    cx.lineTo(currentX, currentY);
+        cx.lineTo(currentX, currentY);
 
-    if (counter === path) {
-        cx.stroke();
+        if (counter === path) {
+            cx.stroke();
+        }
     }
-  }
   
   //spiral
   const radius = 55;
@@ -54,15 +54,14 @@
   cx.moveTo(spiralX, spiralY);
   
   for (let line = 0; line <= 200; line++) {
-  	const angle = line * Math.PI / 30;
-    const length = line * radius / 260;
-    cx.lineTo(spiralX + Math.cos(angle) * length, spiralY + Math.sin(angle) * length);
-  }
+        const angle = line * Math.PI / 30;
+        const length = line * radius / 260;
+        cx.lineTo(spiralX + Math.cos(angle) * length, spiralY + Math.sin(angle) * length);
+    }
   
   cx.stroke();
   
   //star
-  
   const starX = 490;
   const starY = 55;
   const amountOfParabolas = 8;
@@ -71,9 +70,9 @@
   cx.moveTo(starX, starY); 
   
   for (let parabola = 0; parabola <= amountOfParabolas; parabola++) {
-  	const angle = parabola * Math.PI / 4;
-    cx.quadraticCurveTo(starX, starY, starX + Math.cos(angle) * radiusStar, starY + Math.sin(angle) * radiusStar);
-  }
+        const angle = parabola * Math.PI / 4;
+        cx.quadraticCurveTo(starX, starY, starX + Math.cos(angle) * radiusStar, starY + Math.sin(angle) * radiusStar);
+    }
   cx.fillStyle = "yellow";
   cx.fill();
 </script>
