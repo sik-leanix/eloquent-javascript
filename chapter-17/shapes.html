@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <div>
+        <h2>Exercise: Shapes</h2>
+        <p>Write a program that draws the following shapes on a canvas:</p>
+        <ul>
+            <li>1. A trapezoid (a rectangle that is wider on one side)</li>
+            <li>2. A red diamond (a rectangle rotated 45 degrees or ¼π radians)</li>
+            <li>3. A zigzagging line </li>
+            <li>4. A spiral made up of 100 straight line segments</li>
+            <li>5. A yellow star</li>
+        </ul>
+        <p>
+            When drawing the last two, you may want to refer to the explanation of Math.cos and Math.sin in Chapter 14, which describes how to get coordinates on a circle using these functions.
+        </p>
+        <p> I recommend creating a function for each shape. Pass the position, and optionally other properties such as the size or the number of points, as parameters. 
+            The alternative, which is to hard-code numbers all over your code, tends to make the code needlessly hard to read and modify.
+        </p>
+        <h3>Hints:</h3>
+        <p>
+            You’ll also need a loop for the spiral (4). If you draw a series of points, with each point moving further along a circle around the spiral’s center, you get a circle. 
+            If, during the loop, you vary the radius of the circle on which you are putting the current point and go around more than once, the result is a spiral.
+        </p>
+        <p>
+            The star (5) depicted is built out of quadraticCurveTo lines. You could also draw one with straight lines. 
+            Divide a circle into eight pieces for a star with eight points, or however many pieces you want. Draw lines between these points, making them curve toward the center of the star. 
+            With quadraticCurveTo, you can use the center as the control point.
+        </p>
+    </div>
+    <p>
+    <a href="https://github.com/sik-leanix/eloquent-javascript/blob/main/chapter-16/a-monster/a-monster.js">Here you can see my code</a>
+    </p>
+</body>
+<h3>Solutions:</h3>
+<canvas width="600" height="200"></canvas>
+<script>
+    let cx = document.querySelector("canvas").getContext("2d");
+  
+  //trapezoid
+  cx.beginPath();
+  cx.moveTo(50, 30);
+  cx.lineTo(30, 70);
+  cx.lineTo(110, 70);
+  cx.lineTo(90, 30);
+  cx.closePath();
+  cx.stroke();
+  
+  //red diamond 
+  cx.translate(170, 60);
+  cx.rotate(Math.PI / 4);
+  cx.fillStyle = "red";
+  cx.fillRect(-30, -30, 60, 60);
+  cx.resetTransform();
+  
+  //zigzagging
+  cx.beginPath();
+  const startX = 240;
+  const startY = 30;
+  let currentX;
+  let currentY;
+  let corners = 6;
+  let path = corners * 2;
+  for (let counter = 0; counter <= path; counter++) {
+        currentY = currentY + 7;
+        if (counter === 0) {
+            cx.moveTo(startX, startY);
+            currentX = startX;
+            currentY = startY;
+        } else if (counter % 2 == 0) {
+            currentX = currentX - 90;
+        } else {
+            currentX = currentX + 90;
+        }
+
+        cx.lineTo(currentX, currentY);
+
+        if (counter === path) {
+            cx.stroke();
+        }
+    }
+  
+  //spiral
+  const radius = 55;
+  const spiralX = 390;
+  const spiralY = 55;
+  
+  cx.beginPath();
+  cx.moveTo(spiralX, spiralY);
+  
+  for (let line = 0; line <= 200; line++) {
+        const angle = line * Math.PI / 30;
+        const length = line * radius / 260;
+        cx.lineTo(spiralX + Math.cos(angle) * length, spiralY + Math.sin(angle) * length);
+    }
+  
+  cx.stroke();
+  
+  //star
+  const starX = 490;
+  const starY = 55;
+  const amountOfParabolas = 8;
+  const radiusStar = 55;
+  cx.beginPath();
+  cx.moveTo(starX, starY); 
+  
+  for (let parabola = 0; parabola <= amountOfParabolas; parabola++) {
+        const angle = parabola * Math.PI / 4;
+        cx.quadraticCurveTo(starX, starY, starX + Math.cos(angle) * radiusStar, starY + Math.sin(angle) * radiusStar);
+    }
+  cx.fillStyle = "yellow";
+  cx.fill();
+</script>
+</html>
