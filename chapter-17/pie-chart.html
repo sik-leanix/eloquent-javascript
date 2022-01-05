@@ -1,4 +1,41 @@
-<canvas width="600" height="300"></canvas>
+<!DOCTYPE html>
+<html>
+<body>
+    <div>
+        <h2>Exercise: The pie chart</h2>
+        <p>
+            Earlier in the chapter, we saw an example program that drew a pie chart. Modify this program so that the name of each category is shown next to the slice that represents it. 
+            Try to find a pleasing-looking way to automatically position this text that would work for other data sets as well.
+            You may assume that categories are big enough to leave ample room for their labels.
+        </p>
+        <p>You might need Math.sin and Math.cos again, which are described in Chapter 14.</p>
+        <h3>Hints:</h3>
+        <p>You will need to call fillText and set the context’s textAlign and textBaseline properties in such a way that the text ends up where you want it.</p>
+        <p>
+            A sensible way to position the labels would be to put the text on the line going from the center of the pie through the middle of the slice. 
+            You don’t want to put the text directly against the side of the pie but rather move the text out to the side of the pie by a given number of pixels.
+        </p>
+        <p>
+            The angle of this line is currentAngle + 0.5 * sliceAngle. The following code finds a position on this line 120 pixels from the center:
+        </p>
+        <p>let middleAngle = currentAngle + 0.5 * sliceAngle;</p>
+        <p>let textX = Math.cos(middleAngle) * 120 + centerX;</p>
+        <p>let textY = Math.sin(middleAngle) * 120 + centerY;</p>
+        <p>
+            For textBaseline, the value "middle" is probably appropriate when using this approach. What to use for textAlign depends on which side of the circle we are on. 
+            On the left, it should be "right", and on the right, it should be "left", so that the text is positioned away from the pie.
+        </p>
+        <p>
+            If you are not sure how to find out which side of the circle a given angle is on, look to the explanation of Math.cos in Chapter 14. 
+            The cosine of an angle tells us which x-coordinate it corresponds to, which in turn tells us exactly which side of the circle we are on.
+        </p>
+    </div>
+    <p>
+    <a href="https://github.com/sik-leanix/eloquent-javascript/blob/main/chapter-16/pause-game/pause.js">Here you can see my code</a>
+    </p>
+    <h3>Solutions:</h3>
+    <canvas width="600" height="300"></canvas>
+</body>
 <script>
     const results = [
         {name: "Satisfied", count: 1043, color: "lightblue"},
@@ -6,30 +43,30 @@
         {name: "Unsatisfied", count: 510, color: "pink"},
         {name: "No comment", count: 175, color: "silver"}
     ];
-  let cx = document.querySelector("canvas").getContext("2d");
-  let total = results
-    .reduce((sum, {count}) => sum + count, 0);
-  let currentAngle = -0.5 * Math.PI;
-  let centerX = 300, centerY = 150;
+    let cx = document.querySelector("canvas").getContext("2d");
+    let total = results.reduce((sum, {count}) => sum + count, 0);
+    let currentAngle = -0.5 * Math.PI;
+    let centerX = 300, centerY = 150;
 
-  // Add code to draw the slice labels in this loop.
-  for (let result of results) {
-    const name = result.name;
-    let sliceAngle = (result.count / total) * 2 * Math.PI;
-    cx.beginPath();
-    cx.arc(centerX, centerY, 100, currentAngle, currentAngle + sliceAngle);
-    
-    cx.font = "20px Georgia";
-  	cx.fillStyle = "black";
-    const halfSliceAngle = sliceAngle / 2 + currentAngle;
-    const textPosX = Math.cos(halfSliceAngle) * 210 + centerX;
-    const textPosY = Math.sin(halfSliceAngle) * 140 + centerY;
-	cx.fillText(name, textPosX, textPosY);
-    cx.textBaseLine = "middle";
-    
-    currentAngle += sliceAngle;
-    cx.lineTo(centerX, centerY);
-    cx.fillStyle = result.color;
-    cx.fill();
-  }
+    // Add code to draw the slice labels in this loop.
+    for (let result of results) {
+        const name = result.name;
+        let sliceAngle = (result.count / total) * 2 * Math.PI;
+        cx.beginPath();
+        cx.arc(centerX, centerY, 100, currentAngle, currentAngle + sliceAngle);
+
+        cx.font = "20px Georgia";
+        cx.fillStyle = "black";
+        const halfSliceAngle = sliceAngle / 2 + currentAngle;
+        const textPosX = Math.cos(halfSliceAngle) * 210 + centerX;
+        const textPosY = Math.sin(halfSliceAngle) * 140 + centerY;
+        cx.fillText(name, textPosX, textPosY);
+        cx.textBaseLine = "middle";
+
+        currentAngle += sliceAngle;
+        cx.lineTo(centerX, centerY);
+        cx.fillStyle = result.color;
+        cx.fill();
+    }
 </script>
+</html>
