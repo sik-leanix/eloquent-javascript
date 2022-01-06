@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <div>
+            <h2>A JavaScript workbench</h2>
+            <p> Build an interface that allows people to type and run pieces of JavaScript code.</p>
+            <p>
+                Put a button next to a `textarea` field that, when pressed, uses the Function constructor we saw in Chapter 10 to wrap the text in a function and call it. 
+                Convert the return value of the function, or any error it raises, to a string and display it below the text field.
+            </p>
+            
+            <h3>Hints:</h3>
+            <p>
+                Use document.querySelector or document.getElementById to get access to the elements defined in your HTML.
+                An event handler for "click" or "mousedown" events on the button can get the value property of the text field and call Function on it.
+            </p>
+            <p>
+                Make sure you wrap both the call to Function and the call to its result in a try block so you can catch the exceptions it produces.
+                In this case, we really don’t know what type of exception we are looking for, so catch everything.
+            </p>
+            <p>
+                The textContent property of the output element can be used to fill it with a string message. 
+                Or, if you want to keep the old content around, create a new text node using document.createTextNode and append it to the element. 
+                Remember to add a newline character to the end so that not all output appears on a single line.
+            </p>
+        </div>
+        <p>
+        <a href="https://github.com/sik-leanix/eloquent-javascript/blob/main/chapter-18/js-workbench.html">Here you can see my code</a>
+        </p>
+        <textarea id="code">return "hi";</textarea>
+        <button id="button">Run</button>
+        <pre id="output"></pre>
+
+        <script>
+        const code = document.getElementById("code");
+        const button = document.getElementById("button");
+        const output = document.getElementById("output");
+        button.addEventListener("click", (event) => {
+            try {
+                const fun = new Function(code.value)
+                output.innerHTML = fun();
+            } catch (e) {
+                output.innerHTML = `Error: ${e}`;
+            }
+        });
+        </script>
+    </body>
+</html>
